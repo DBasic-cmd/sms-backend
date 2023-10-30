@@ -13,22 +13,38 @@ import java.util.List;
 public class StudentController {
     private final StudentRepository studentRepository;
 
-    //Add student REST API
+    //POST student REST API
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return studentRepository.save(student);
     }
 
-    //Get an individual student REST API
+    //GET an individual student REST API
     @GetMapping("/{id}")
     public Student getStudent(@PathVariable Long id) {
         return studentRepository.findById(id)
                 .orElseThrow();
     }
 
+
+
+    //  GET all students REST API
     @GetMapping
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
+    }
+
+    //UPDATE student REST API
+    @PutMapping("/{id}")
+    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
+        student.setId(id);
+        return studentRepository.save(student);
+    }
+
+    //DELETE student REST API
+    @DeleteMapping("/{id}")
+    public void deleteStudent(@PathVariable Long id) {
+        studentRepository.deleteById(id);
     }
 
 
