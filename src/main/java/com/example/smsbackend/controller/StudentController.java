@@ -1,12 +1,10 @@
 package com.example.smsbackend.controller;
 
 import com.example.smsbackend.entity.Student;
+import com.example.smsbackend.exception.StudentNotFoundException;
 import com.example.smsbackend.repository.StudentRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
@@ -14,10 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
     private final StudentRepository studentRepository;
 
-    //Build an add student REST API
+    //Add student REST API
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return studentRepository.save(student);
+    }
+
+    //Get an individual student REST API
+    @GetMapping("/{id}")
+    public Student getStudent(@PathVariable Long id) {
+        return studentRepository.findById(id)
+                .orElseThrow();
     }
 
 
