@@ -1,10 +1,11 @@
 package com.example.smsbackend.controller;
 
 import com.example.smsbackend.entity.Student;
-import com.example.smsbackend.exception.StudentNotFoundException;
 import com.example.smsbackend.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -23,6 +24,11 @@ public class StudentController {
     public Student getStudent(@PathVariable Long id) {
         return studentRepository.findById(id)
                 .orElseThrow();
+    }
+
+    @GetMapping
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
     }
 
 
